@@ -1,15 +1,19 @@
 {
    "compilerOptions": {
-      "lib": [
-         "es5",
-         "es6"
-      ],
-      "target": "es5",
       "module": "commonjs",
-      "moduleResolution": "node",
-      "outDir": "./build",
+      "lib": [
+         "ESNext"
+      ],      
+      "declaration": true, 
+      "removeComments": true,
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
-      "sourceMap": true
-   }
+      "target": "es2017",
+      "sourceMap": true,
+      "outDir": "./build",
+      "baseUrl": "./",
+      "moduleResolution": "node",
+   },
+   "incremental": true,
+   "exclude": ["node_modules", "build"]
 }
