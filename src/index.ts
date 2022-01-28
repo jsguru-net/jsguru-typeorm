@@ -4,7 +4,8 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { Request, Response } from "express";
 import { Routes } from "./routes";
-import { User } from "./entity/User";
+import { User } from "./entity/user";
+import { CustomerSource } from "./entity";
 
 createConnection()
   .then(async (connection) => {
@@ -42,20 +43,27 @@ createConnection()
     app.listen(3000);
 
     // insert new users for test
-    await connection.manager.save(
-      connection.manager.create(User, {
-        firstName: "Timber",
-        lastName: "Saw",
-        age: 27,
-      })
-    );
-    await connection.manager.save(
-      connection.manager.create(User, {
-        firstName: "Phantom",
-        lastName: "Assassin",
-        age: 24,
-      })
-    );
+    const user = connection.manager.create<CustomerSource>(CustomerSource, {
+      name: "Liên hệ cá nhân",
+      description: "Thông tin từ mối quan hệ cá nhân",
+    });
+    // save to database
+    const savedRecord = await connection.manager.save(user);
+    console.error(savedRecord);
+    // await connection.manager.save(
+    //   connection.manager.create(User, {
+    //     firstName: "Timber",
+    //     lastName: "Saw",
+    //     age: 27,
+    //   })
+    // );
+    // await connection.manager.save(
+    //   connection.manager.create(User, {
+    //     firstName: "Phantom",
+    //     lastName: "Assassin",
+    //     age: 24,
+    //   })
+    // );
 
     console.log(
       "Express server has started on port 3000. Open http://localhost:3000/users to see results"
