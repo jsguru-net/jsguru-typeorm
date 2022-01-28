@@ -21,6 +21,10 @@ yarn add ts-node typeorm
 
 ![API Email Marketing](./erd/API-Email-Marketing.JPG)
 
+### Diagrams
+
+![Diagrams](./erd/jsguru-typeorm.png)
+
 ```bash
 yarn typeorm init --express --docker
 ```
