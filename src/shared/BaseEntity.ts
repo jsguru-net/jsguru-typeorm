@@ -20,13 +20,13 @@ export class BaseEntity {
   updatedAt: Date;
   @BeforeInsert()
   beforeInsert() {
-    const now = DateTimeHelpers.nowUTC();
+    const now = new Date();
     this.createdAt = now;
     this.updatedAt = now;
   }
 
   @BeforeUpdate()
   beforeUpdate() {
-    this.updatedAt = DateTimeHelpers.nowUTC();
+    this.updatedAt = new Date();
   }
 }

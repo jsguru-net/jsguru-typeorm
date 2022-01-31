@@ -2,6 +2,6 @@
 const moment = require("moment-timezone");
 export const DateTimeHelpers = {
   nowUTC: () => {
-    return moment().utc().format("YYYY-MM-DD HH:mm:ss.SS");
+    return moment().utc().format("YYYY-MM-DD HH:mm:ss.SSSZ");
   },
 };

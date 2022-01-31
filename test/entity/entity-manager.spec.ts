@@ -8,21 +8,36 @@ jest.useRealTimers();
 describe("Entity", () => {
   beforeAll(() => {
     // setup one time
+    console.error("process.env.TZ", process.env.TZ);
   });
   describe("Create Entity with entity manager", () => {
     it("entityManager.create - singular", async () => {
       await createConnection();
 
       const entityManager = getManager();
-      const user = entityManager.create<CustomerSource>(CustomerSource, {
+      // await entityManager.query(`SET GLOBAL time_zone = '+07:00';`);
+
+      const queryResult = await entityManager.findOne<CustomerSource>(
+        CustomerSource,
+        { name: "Email" }
+      );
+      console.error(queryResult);
+      const deletedResult = await entityManager.delete(CustomerSource, {
         name: "Email",
-        description: "Danh sách email",
       });
-      console.error({ user });
+      const customerSource = entityManager.create<CustomerSource>(
+        CustomerSource,
+        {
+          name: "Email",
+          description: "Danh sách email",
+        }
+      );
+
       // save to database
-      const savedRecord = await entityManager.save(user);
+      const savedRecord = await entityManager.save(customerSource);
+      console.error(savedRecord);
       expect(savedRecord).toBeTruthy();
-    }, 10000);
+    }, 20000);
   });
   afterAll(() => {
     closeDatabaseConnection();
