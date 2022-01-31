@@ -31,6 +31,12 @@ yarn typeorm init --express --docker
 
 ## Migration
 
+### Create Entity
+
+```bash
+yarn typeorm entity:create -n Customer
+```
+
 ### Generate migration
 
 ```bash
