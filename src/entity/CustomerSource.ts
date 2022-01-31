@@ -1,4 +1,4 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, Index } from "typeorm";
 import { BaseEntity } from "../shared";
 
 /*
@@ -14,14 +14,19 @@ import { BaseEntity } from "../shared";
   name: "customer_sources",
 })
 export class CustomerSource extends BaseEntity {
+  @Index("uc_name", {
+    unique: true,
+  })
   @Column({
     type: "varchar",
     length: 80,
+    nullable: false,
   })
   name: string;
   @Column({
     type: "varchar",
     length: 255,
+    nullable: true,
   })
   description: string;
 }

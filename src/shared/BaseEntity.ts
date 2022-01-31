@@ -6,7 +6,9 @@ import {
 } from "typeorm";
 import { DateTimeHelpers } from "./helpers";
 export class BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({
+    type: "bigint",
+  })
   id: number;
   @Column({
     name: "created_at",

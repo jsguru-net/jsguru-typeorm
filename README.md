@@ -29,6 +29,20 @@ yarn add ts-node typeorm
 yarn typeorm init --express --docker
 ```
 
+## Migration
+
+### Generate migration
+
+```bash
+yarn typeorm migration:generate -n CustomerSourceCreate
+```
+
+### Create custom migration
+
+```bash
+yarn typeorm migration:create -n CustomMigrationName
+```
+
 ## References
 
 - [TypeORM Official](https://typeorm.io/#/using-cli)
