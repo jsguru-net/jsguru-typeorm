@@ -72,10 +72,9 @@ export class Customer extends BaseEntity {
     length: 20,
     type: "varchar",
     nullable: true,
-    name: "phone_number",
   })
   phoneNumber: string;
-  @Index("uc_email", {
+  @Index("uq_customers_email", {
     unique: true,
   })
   @Column({
