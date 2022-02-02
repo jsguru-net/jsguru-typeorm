@@ -8,18 +8,14 @@ const camelToSnakeCase = (str) =>
 function parseName(
   prefix: string,
   tableOrName: Table | string,
-  suffix?: string | string[],
-  length = 30
+  suffix?: string | string[]
 ) {
   const tableName =
     tableOrName instanceof Table ? tableOrName.name : tableOrName;
 
   suffix = Array.isArray(suffix) ? suffix.join("_") : suffix;
 
-  return `${prefix}_${tableName}${suffix ? `_${suffix}` : ""}`.substr(
-    0,
-    length
-  );
+  return `${prefix}_${tableName}${suffix ? `_${suffix}` : ""}`;
 }
 
 class CustomNamingStrategy extends DefaultNamingStrategy {
