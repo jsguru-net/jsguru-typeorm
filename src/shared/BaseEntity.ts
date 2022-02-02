@@ -4,8 +4,8 @@ import {
   Column,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { DateTimeHelpers } from "./helpers";
-export class BaseEntity {
+
+export abstract class BaseEntity {
   @PrimaryGeneratedColumn({
     type: "bigint",
   })
