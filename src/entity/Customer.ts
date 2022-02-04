@@ -38,6 +38,10 @@ export enum CustomerGender {
   name: "customers",
 })
 export class Customer extends BaseEntity {
+  constructor(partial: Partial<Customer>) {
+    super();
+    Object.assign(this, partial);
+  }
   @Column({
     length: 60,
     type: "varchar",

@@ -14,6 +14,10 @@ import { BaseEntity } from "../shared";
   name: "customer_sources",
 })
 export class CustomerSource extends BaseEntity {
+  constructor(partial: Partial<CustomerSource>) {
+    super();
+    Object.assign(this, partial);
+  }
   @Index("uq_customer_sources_name", {
     unique: true,
   })
