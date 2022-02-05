@@ -5,6 +5,10 @@ import { Column, Entity } from "typeorm";
   name: "events",
 })
 export class Event extends BaseEntity {
+  constructor(partial: Partial<Event>) {
+    super();
+    Object.assign(this, partial);
+  }
   @Column({
     length: 80,
     type: "varchar",

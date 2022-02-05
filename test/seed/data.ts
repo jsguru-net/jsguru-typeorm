@@ -1,4 +1,4 @@
-const Male = [
+export const Male = [
   { name: "Mạch Duy Cường" },
   { name: "Đàm Kim Thịnh" },
   { name: "Lê Hồng Ðăng" },
@@ -1001,7 +1001,7 @@ const Male = [
   { name: "Châu Anh Vũ" },
 ];
 
-const Female = [
+export const Female = [
   { name: "Bùi Như Thảo" },
   { name: "Mạch Ngọc San" },
   { name: "Đặng Thảo Nghi" },
