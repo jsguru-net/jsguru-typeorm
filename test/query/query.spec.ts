@@ -4,10 +4,12 @@ import {
   FindConditions,
   getConnection,
   getManager,
+  In,
   Like,
   Not,
 } from "typeorm";
 import { Customer } from "../../src/entity";
+import { CustomerGender } from "../../src/entity/Customer";
 import { CustomerRepository } from "../../src/repository/CustomerRepository";
 
 describe("Query", () => {
@@ -16,21 +18,59 @@ describe("Query", () => {
     await createConnection();
   });
   describe("Simple query", () => {
-    it("find by id", () => {});
+    it("test query mapping", () => {
+      // s
+      // other conditions
+      const filter = {
+        s: "nh", // email or fullname
+        customerSource: {
+          id: [1, 2, 3],
+        },
+      };
+
+      console.error(filter);
+      expect(filter).toBeTruthy();
+    });
+    it("find by id", async () => {
+      const entityManager = getManager();
+      const customerRepository =
+        entityManager.getCustomRepository(CustomerRepository);
+      const customer = await customerRepository.findOne(104201, {
+        relations: ["customerSource"],
+      });
+      expect(customer).toBeTruthy();
+    }, 20000);
     it("find by filters", async () => {
       const entityManager = getManager();
       const customerRepository =
         entityManager.getCustomRepository(CustomerRepository);
-      const filters = {
-        fullname: "%user fullname%",
-      };
       const [customers, count] = await customerRepository.search({
-        id: Not(1),
-        fullname: Like(filters.fullname),
+        select: [
+          "id",
+          "fullname",
+          "email",
+          "createdAt",
+          "updatedAt",
+          "phoneNumber",
+          "gender",
+        ],
+        relations: ["customerSource"],
+        where: {
+          gender: In([CustomerGender.MALE, CustomerGender.FEMALE]),
+          customerSource: {
+            id: In([1, 2, 3]),
+          },
+        },
+        take: 10,
+        skip: 0,
+        order: {
+          id: "DESC",
+          fullname: "ASC",
+        },
       });
       console.error(customers, count);
       expect(customers.length).toBeTruthy();
-    });
+    }, 20000);
   });
   afterAll(async () => {
     await getConnection().close();
