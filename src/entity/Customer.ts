@@ -47,6 +47,7 @@ export class Customer extends BaseEntity {
     type: "varchar",
     nullable: false,
   })
+  @Index("ix_customers_fullname", {})
   fullname: string;
   @Column({
     type: "date",
