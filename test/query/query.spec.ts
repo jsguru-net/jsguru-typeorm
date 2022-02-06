@@ -8,7 +8,7 @@ import {
   Like,
   Not,
 } from "typeorm";
-import { Customer } from "../../src/entity";
+import { Customer, CustomerSource, Event } from "../../src/entity";
 import { CustomerGender } from "../../src/entity/Customer";
 import { CustomerRepository } from "../../src/repository/CustomerRepository";
 
@@ -71,6 +71,60 @@ describe("Query", () => {
       console.error(customers, count);
       expect(customers.length).toBeTruthy();
     }, 20000);
+  });
+  describe("Query builder", () => {
+    it("Find events in Feb", async () => {
+      const entityManager = getManager();
+      const eventRepository = entityManager.getRepository(Event);
+      const eventQuery = eventRepository
+        .createQueryBuilder("event")
+        .where(
+          "event.id in (SELECT DISTINCT(id) FROM `jsguru-typeorm`.events evt WHERE MONTH(evt.event_date) = :month)",
+          {
+            month: 2,
+          }
+        );
+      const [eventsInFeb, count] = await eventQuery.getManyAndCount();
+
+      expect(eventsInFeb).toBeTruthy();
+    });
+    it("Statistic for events by month and year", async () => {
+      const entityManager = getManager();
+      const eventRepository = entityManager.getRepository(Event);
+      const eventQuery = eventRepository
+        .createQueryBuilder("event")
+        .select("MONTH(event.event_date)", "event_month")
+        .addSelect("YEAR(event.event_date)", "event_year")
+        .addSelect("COUNT(event.id)", "number_of_events")
+        .groupBy("event_month")
+        .addGroupBy("event_year");
+      const monthlyStatsRaws = await eventQuery.getRawMany();
+      const monthlyStats = monthlyStatsRaws.map((s: any) => {
+        const item = {
+          eventMonth: s.event_month,
+          eventYear: s.event_year,
+          numberOfEvents: parseInt(s.number_of_events),
+        };
+        return item;
+      });
+      expect(monthlyStats).toBeTruthy();
+    });
+  });
+  describe("Update", () => {
+    it("should update data", async () => {
+      const entityManager = getManager();
+      const customerSourceRepository =
+        entityManager.getRepository(CustomerSource);
+      await customerSourceRepository.update(
+        { id: 8 },
+        {
+          description: "Zalo from nodeJS",
+        }
+      );
+      const customerSource = await customerSourceRepository.findOne(8);
+      console.log(customerSource);
+      expect(customerSource).toBeTruthy();
+    });
   });
   afterAll(async () => {
     await getConnection().close();

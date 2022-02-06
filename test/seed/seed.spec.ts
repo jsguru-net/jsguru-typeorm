@@ -182,6 +182,87 @@ describe("Seed", () => {
 
       expect(events).toBeTruthy();
     }, 600000);
+    it("should generate a collection of event", async () => {
+      const entityManager = getManager();
+
+      const events: Array<Event> = [];
+      events.push(
+        new Event({
+          name: "Tết Dương Lịch 2023",
+          eventDate: new Date("2023-01-01"),
+        }),
+        new Event({
+          name: "Lễ Tình Nhân 2023",
+          eventDate: new Date("2023-02-14"),
+        }),
+        new Event({
+          name: "Ngày Thầy Thuốc Việt Nam 2023",
+          eventDate: new Date("2023-02-27"),
+        }),
+        new Event({
+          name: "Ngày Quốc Tết Phụ Nữ 2023",
+          eventDate: new Date("2023-03-08"),
+        }),
+        new Event({
+          name: "Ngày Quốc Tế Hạnh Phúc 2023",
+          eventDate: new Date("2023-03-20"),
+        }),
+        new Event({
+          name: "Ngày thành lập Đoàn TNCS Hồ Chí Minh",
+          eventDate: new Date("2023-03-26"),
+        }),
+        new Event({
+          name: "Ngày Cá tháng Tư",
+          eventDate: new Date("2023-04-01"),
+        }),
+        new Event({
+          name: "Ngày giải phóng miền Nam",
+          eventDate: new Date("2023-04-30"),
+        }),
+        new Event({
+          name: "Ngày Quốc tế Lao động",
+          eventDate: new Date("2023-05-01"),
+        }),
+        new Event({
+          name: "Ngày chiến thắng Điện Biên Phủ",
+          eventDate: new Date("2023-05-07"),
+        }),
+        new Event({
+          name: "Ngày của mẹ",
+          eventDate: new Date("2023-05-03"),
+        }),
+        new Event({
+          name: "Ngày sinh chủ tịch Hồ Chí Minh",
+          eventDate: new Date("2023-05-19"),
+        }),
+        new Event({
+          name: "Ngày Quốc tế thiếu nhi",
+          eventDate: new Date("2023-06-01"),
+        }),
+        new Event({
+          name: "Ngày của cha",
+          eventDate: new Date("2023-06-17"),
+        }),
+        new Event({
+          name: "Ngày báo chí Việt Nam",
+          eventDate: new Date("2023-06-21"),
+        }),
+        new Event({
+          name: "Ngày gia đình Việt Nam",
+          eventDate: new Date("2023-06-28"),
+        }),
+        new Event({
+          name: "Ngày dân số thế giới",
+          eventDate: new Date("2023-07-11"),
+        })
+      );
+
+      const eventRepository =
+        entityManager.getCustomRepository(EventRepository);
+      await eventRepository.save(events);
+
+      expect(events).toBeTruthy();
+    }, 600000);
   });
   afterAll(async () => {
     await getConnection().close();

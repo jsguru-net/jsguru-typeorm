@@ -7,9 +7,7 @@ describe("Example", () => {
   });
   describe("StringHelpers", () => {
     it("replaceVietNameseTones", () => {
-      const testcases = [
-        { input: "Bùi Kiều Kiều  Giang ", expected: "bui.kieu.kieu.giang" },
-      ];
+      const testcases = [{ input: "Đức", expected: "duc" }];
       expect(StringHelpers.replaceVietNameseTones(testcases[0].input)).toEqual(
         testcases[0].expected
       );
